@@ -1,0 +1,90 @@
+.learn-root {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  color: #222;
+  line-height: 1.6;
+}
+
+.learn-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.learn-header h1 {
+  color: #d6336c;
+}
+
+.nav-btn {
+  margin-left: 12px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.nav-btn:hover {
+  background: #d6336c;
+  color: white;
+  border: none;
+}
+
+.lesson {
+  margin-bottom: 40px;
+  background: #fff6f9;
+  padding: 20px 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.lesson h2 {
+  color: #d6336c;
+  margin-bottom: 12px;
+}
+
+.kolam-image {
+  max-width: 100%;
+  display: block;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.example-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.example-grid img {
+  width: 250px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.get-started {
+  text-align: center;
+  margin: 50px 0;
+  padding: 30px;
+  background: #ffeef2;
+  border-radius: 16px;
+}
+
+.create-btn {
+  background: #d6336c;
+  color: white;
+  border: none;
+  padding: 14px 26px;
+  border-radius: 12px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.create-btn:hover {
+  transform: translateY(-2px);
+}
