@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./LandingPage";
 import LearnKolam from "./LearnKolam";
 import KolamGallery from "./KolamGallery";
-import CreateKolam from "./CreateKolam";
 import PulliKolamGenerator from "./PulliKolamGenerator"; // Fixed import
 
 export default function App() {

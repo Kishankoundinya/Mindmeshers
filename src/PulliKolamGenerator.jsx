@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const PulliKolamGenerator = () => {
   const canvasRef = useRef(null);
+  const navigate = useNavigate();
   const [dots, setDots] = useState([]);
   const [patternType, setPatternType] = useState('square');
   const [lineThickness, setLineThickness] = useState(3);
@@ -38,8 +40,8 @@ const PulliKolamGenerator = () => {
     const mobile = window.innerWidth < 768;
     setIsMobile(mobile);
     setCanvasSize({
-      width: mobile ? 350 : 600,
-      height: mobile ? 350 : 600
+      width: mobile ? Math.min(350, window.innerWidth - 40) : 600,
+      height: mobile ? Math.min(350, window.innerWidth - 40) : 600
     });
   };
 
@@ -415,43 +417,72 @@ const PulliKolamGenerator = () => {
     }
   };
 
-  // Inline CSS
+  const goToHome = () => {
+    navigate('/');
+  };
+
+  // Inline CSS with improved responsiveness
   const styles = {
     container: {
       fontFamily: 'Arial, sans-serif',
-      margin: '20px',
+      margin: '0',
       background: 'linear-gradient(135deg, #fff0d9 0%, #ffeef2 50%, #fff9d6 100%)',
       minHeight: '100vh',
-      padding: '20px'
+      padding: '20px',
+      boxSizing: 'border-box'
     },
     header: {
       textAlign: 'center',
       color: '#d6336c',
-      marginBottom: '30px',
-      fontSize: '2.5em',
-      textShadow: '2px 2px 4px rgba(214, 51, 108, 0.1)'
+      marginBottom: '20px',
+      fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+      textShadow: '2px 2px 4px rgba(214, 51, 108, 0.1)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '20px',
+      flexWrap: 'wrap'
+    },
+    homeButton: {
+      padding: '10px 20px',
+      background: '#d6336c',
+      color: 'white',
+      border: 'none',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      fontWeight: 'bold',
+      fontSize: '14px',
+      boxShadow: '0 2px 5px rgba(214, 51, 108, 0.3)',
+      transition: 'all 0.3s ease'
     },
     mainContainer: {
       display: 'flex',
-      gap: '30px',
-      maxWidth: '1200px',
+      gap: '20px',
+      maxWidth: '1400px',
       margin: '0 auto',
       background: 'rgba(255, 255, 255, 0.9)',
       borderRadius: '15px',
-      padding: '25px',
+      padding: '20px',
       boxShadow: '0 8px 32px rgba(214, 51, 108, 0.1)',
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
+      boxSizing: 'border-box'
     },
     controls: {
-      width: '320px',
-      flexShrink: 0
+      flex: '1',
+      minWidth: isMobile ? '100%' : '300px',
+      maxWidth: isMobile ? '100%' : '400px'
+    },
+    canvasWrapper: {
+      flex: '2',
+      minWidth: isMobile ? '100%' : '400px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '15px'
     },
     canvasContainer: {
       position: 'relative',
-      flexGrow: 1,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'flex-start'
+      display: 'inline-block'
     },
     canvas: {
       border: '2px solid #d6336c',
@@ -460,11 +491,23 @@ const PulliKolamGenerator = () => {
       background: 'white',
       boxShadow: '0 4px 15px rgba(214, 51, 108, 0.2)',
       maxWidth: '100%',
-      height: 'auto'
+      height: 'auto',
+      display: 'block'
+    },
+    dotCounter: {
+      marginTop: '10px',
+      background: '#d6336c',
+      color: 'white',
+      padding: '8px 16px',
+      borderRadius: '20px',
+      fontSize: '0.9em',
+      fontWeight: 'bold',
+      boxShadow: '0 2px 8px rgba(214, 51, 108, 0.3)',
+      textAlign: 'center'
     },
     controlGroup: {
-      margin: '20px 0',
-      padding: '20px',
+      margin: '15px 0',
+      padding: '15px',
       background: 'rgba(255, 255, 255, 0.7)',
       borderRadius: '10px',
       borderLeft: '4px solid #d6336c'
@@ -472,12 +515,13 @@ const PulliKolamGenerator = () => {
     controlTitle: {
       color: '#d6336c',
       marginTop: 0,
-      marginBottom: '15px',
-      fontSize: '1.2em'
+      marginBottom: '12px',
+      fontSize: '1.1em',
+      fontWeight: 'bold'
     },
     button: {
-      padding: '10px 18px',
-      margin: '5px',
+      padding: '10px 15px',
+      margin: '4px',
       cursor: 'pointer',
       border: 'none',
       borderRadius: '8px',
@@ -486,7 +530,15 @@ const PulliKolamGenerator = () => {
       fontWeight: 'bold',
       transition: 'all 0.3s ease',
       boxShadow: '0 2px 5px rgba(214, 51, 108, 0.3)',
-      fontSize: '14px'
+      fontSize: '14px',
+      flex: '1',
+      minWidth: '120px'
+    },
+    buttonGroup: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '5px',
+      margin: '10px 0'
     },
     primaryButton: {
       background: '#d6336c',
@@ -494,12 +546,10 @@ const PulliKolamGenerator = () => {
     },
     downloadButton: {
       background: '#28a745',
-      margin: '3px',
       fontSize: '13px'
     },
     shareButton: {
       background: '#17a2b8',
-      margin: '3px',
       fontSize: '13px'
     },
     select: {
@@ -510,43 +560,46 @@ const PulliKolamGenerator = () => {
       width: '100%',
       background: 'white',
       color: '#333',
-      fontSize: '14px'
+      fontSize: '14px',
+      boxSizing: 'border-box'
     },
     slider: {
       width: '100%',
-      margin: '10px 0',
+      margin: '8px 0',
       accentColor: '#d6336c'
     },
     label: {
       display: 'block',
-      margin: '10px 0 5px 0',
+      margin: '8px 0 4px 0',
       color: '#d6336c',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      fontSize: '14px'
     },
     coordinates: {
-      marginTop: '10px',
+      marginTop: '8px',
       fontSize: '12px',
-      maxHeight: '150px',
+      maxHeight: '120px',
       overflowY: 'auto',
-      padding: '10px',
+      padding: '8px',
       background: 'rgba(255, 255, 255, 0.5)',
       borderRadius: '5px',
       border: '1px solid rgba(214, 51, 108, 0.2)'
     },
     coordInput: {
       width: '100%',
-      height: '80px',
-      marginTop: '10px',
-      padding: '10px',
+      height: '70px',
+      marginTop: '8px',
+      padding: '8px',
       border: '2px solid #d6336c',
       borderRadius: '8px',
       resize: 'vertical',
       fontFamily: 'monospace',
-      fontSize: '12px'
+      fontSize: '12px',
+      boxSizing: 'border-box'
     },
     customGrid: {
-      marginTop: '15px',
-      padding: '15px',
+      marginTop: '12px',
+      padding: '12px',
       background: 'rgba(214, 51, 108, 0.1)',
       borderRadius: '8px',
       border: '1px solid rgba(214, 51, 108, 0.2)'
@@ -554,62 +607,56 @@ const PulliKolamGenerator = () => {
     inputRow: {
       display: 'flex',
       alignItems: 'center',
-      gap: '10px',
-      marginBottom: '10px',
+      gap: '8px',
+      marginBottom: '8px',
       flexWrap: 'wrap'
     },
     numberInput: {
-      padding: '8px',
+      padding: '6px',
       border: '2px solid #d6336c',
       borderRadius: '6px',
-      width: '70px',
+      width: '60px',
       textAlign: 'center',
-      fontSize: '14px'
+      fontSize: '14px',
+      boxSizing: 'border-box'
     },
     layoutInfo: {
-      marginTop: '10px',
-      padding: '8px',
+      marginTop: '8px',
+      padding: '6px',
       background: 'rgba(214, 51, 108, 0.1)',
       borderRadius: '6px',
-      textAlign: 'center'
-    },
-    dotCounter: {
-      position: 'absolute',
-      bottom: '-30px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      background: '#d6336c',
-      color: 'white',
-      padding: '5px 15px',
-      borderRadius: '20px',
-      fontSize: '0.9em',
-      fontWeight: 'bold',
-      boxShadow: '0 2px 8px rgba(214, 51, 108, 0.3)'
+      textAlign: 'center',
+      fontSize: '14px',
+      fontWeight: 'bold'
     },
     downloadButtons: {
       display: 'flex',
-      flexDirection: 'column',
-      gap: '8px'
+      flexDirection: isMobile ? 'column' : 'row',
+      gap: '6px',
+      flexWrap: 'wrap'
     }
   };
 
-  // Mobile responsive adjustments
-  if (isMobile) {
-    styles.mainContainer.flexDirection = 'column';
-    styles.controls.width = '100%';
-    styles.mainContainer.padding = '15px';
-    styles.controlGroup.padding = '15px';
-    styles.button.padding = '8px 15px';
-    styles.button.fontSize = '13px';
-    styles.header.fontSize = '2em';
-    styles.downloadButtons.flexDirection = 'row';
-    styles.downloadButtons.flexWrap = 'wrap';
-    styles.downloadButtons.justifyContent = 'center';
-  }
+  // Add hover effects
+  const buttonHoverStyle = {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 8px rgba(214, 51, 108, 0.4)'
+  };
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.header}>Kolam Generator</h1>
+      <div style={styles.header}>
+        <h1 style={{ margin: 0 }}>Kolam Generator</h1>
+        <button 
+          onClick={goToHome}
+          style={styles.homeButton}
+          onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+          onMouseOut={(e) => Object.assign(e.target.style, styles.homeButton)}
+        >
+          🏠 Home
+        </button>
+      </div>
+      
       <div style={styles.mainContainer}>
         <div style={styles.controls}>
           <div style={styles.controlGroup}>
@@ -649,24 +696,37 @@ const PulliKolamGenerator = () => {
                     style={styles.numberInput}
                   />
                 </div>
-                <button 
-                  onClick={generateCustomGrid} 
-                  style={{...styles.button, ...styles.primaryButton}}
-                >
-                  Generate Custom Grid
-                </button>
+                <div style={styles.buttonGroup}>
+                  <button 
+                    onClick={generateCustomGrid} 
+                    style={{...styles.button, ...styles.primaryButton}}
+                    onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                    onMouseOut={(e) => Object.assign(e.target.style, {...styles.button, ...styles.primaryButton})}
+                  >
+                    Generate Custom Grid
+                  </button>
+                </div>
               </div>
             )}
             
             <div style={styles.layoutInfo}>
-              <p>Current: {dots.length} dots</p>
+              <p style={{ margin: 0 }}>Current: {dots.length} dots</p>
             </div>
           </div>
 
           <div style={styles.controlGroup}>
             <h3 style={styles.controlTitle}>2. Place Additional Dots</h3>
-            <p>Click on canvas to add more dots manually</p>
-            <button onClick={clearDots} style={styles.button}>Clear All Dots</button>
+            <p style={{ margin: '8px 0', fontSize: '14px' }}>Click on canvas to add more dots manually</p>
+            <div style={styles.buttonGroup}>
+              <button 
+                onClick={clearDots} 
+                style={styles.button}
+                onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                onMouseOut={(e) => Object.assign(e.target.style, styles.button)}
+              >
+                Clear All Dots
+              </button>
+            </div>
           </div>
           
           <div style={styles.controlGroup}>
@@ -708,24 +768,61 @@ const PulliKolamGenerator = () => {
           </div>
           
           <div style={styles.controlGroup}>
-            <button onClick={generateKolam} style={{...styles.button, ...styles.primaryButton}}>
-              Generate Kolam
-            </button>
-            <button onClick={clearKolam} style={styles.button}>Clear Lines</button>
-            <button onClick={resetAll} style={styles.button}>Reset All</button>
+            <h3 style={styles.controlTitle}>5. Generate Kolam</h3>
+            <div style={styles.buttonGroup}>
+              <button 
+                onClick={generateKolam} 
+                style={{...styles.button, ...styles.primaryButton}}
+                onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                onMouseOut={(e) => Object.assign(e.target.style, {...styles.button, ...styles.primaryButton})}
+              >
+                Generate Kolam
+              </button>
+              <button 
+                onClick={clearKolam} 
+                style={styles.button}
+                onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                onMouseOut={(e) => Object.assign(e.target.style, styles.button)}
+              >
+                Clear Lines
+              </button>
+              <button 
+                onClick={resetAll} 
+                style={styles.button}
+                onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                onMouseOut={(e) => Object.assign(e.target.style, styles.button)}
+              >
+                Reset All
+              </button>
+            </div>
           </div>
 
           <div style={styles.controlGroup}>
-            <h3 style={styles.controlTitle}>5. Download & Share</h3>
+            <h3 style={styles.controlTitle}>6. Download & Share</h3>
             <div style={styles.downloadButtons}>
-              <button onClick={downloadKolam} style={{...styles.button, ...styles.downloadButton}}>
+              <button 
+                onClick={downloadKolam} 
+                style={{...styles.button, ...styles.downloadButton}}
+                onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                onMouseOut={(e) => Object.assign(e.target.style, {...styles.button, ...styles.downloadButton})}
+              >
                 📥 Download PNG
               </button>
-              <button onClick={downloadSVG} style={{...styles.button, ...styles.downloadButton}}>
+              <button 
+                onClick={downloadSVG} 
+                style={{...styles.button, ...styles.downloadButton}}
+                onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                onMouseOut={(e) => Object.assign(e.target.style, {...styles.button, ...styles.downloadButton})}
+              >
                 📥 Download SVG
               </button>
-              <button onClick={shareKolam} style={{...styles.button, ...styles.shareButton}}>
-                📤 Share Kolam
+              <button 
+                onClick={shareKolam} 
+                style={{...styles.button, ...styles.shareButton}}
+                onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                onMouseOut={(e) => Object.assign(e.target.style, {...styles.button, ...styles.shareButton})}
+              >
+                📤 Share
               </button>
             </div>
           </div>
@@ -734,7 +831,7 @@ const PulliKolamGenerator = () => {
             <h3 style={styles.controlTitle}>Coordinates</h3>
             <div style={styles.coordinates}>
               {dots.map((dot, index) => (
-                <div key={index}>
+                <div key={index} style={{ margin: '2px 0' }}>
                   Dot {index + 1}: ({Math.round(dot.x)}, {Math.round(dot.y)})
                 </div>
               ))}
@@ -745,18 +842,29 @@ const PulliKolamGenerator = () => {
               placeholder="Enter coordinates: x1,y1; x2,y2; ..." 
               style={styles.coordInput}
             />
-            <button onClick={loadCoordinates} style={styles.button}>Load Coordinates</button>
+            <div style={styles.buttonGroup}>
+              <button 
+                onClick={loadCoordinates} 
+                style={styles.button}
+                onMouseOver={(e) => Object.assign(e.target.style, buttonHoverStyle)}
+                onMouseOut={(e) => Object.assign(e.target.style, styles.button)}
+              >
+                Load Coordinates
+              </button>
+            </div>
           </div>
         </div>
         
-        <div style={styles.canvasContainer}>
-          <canvas 
-            ref={canvasRef}
-            width={canvasSize.width}
-            height={canvasSize.height}
-            onClick={placeDot}
-            style={styles.canvas}
-          />
+        <div style={styles.canvasWrapper}>
+          <div style={styles.canvasContainer}>
+            <canvas 
+              ref={canvasRef}
+              width={canvasSize.width}
+              height={canvasSize.height}
+              onClick={placeDot}
+              style={styles.canvas}
+            />
+          </div>
           <div style={styles.dotCounter}>
             Total Dots: {dots.length}
           </div>
