@@ -609,7 +609,7 @@ const PulliKolamGenerator = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.header}>Pulli Kolam Generator</h1>
+      <h1 style={styles.header}>Kolam Generator</h1>
       <div style={styles.mainContainer}>
         <div style={styles.controls}>
           <div style={styles.controlGroup}>
