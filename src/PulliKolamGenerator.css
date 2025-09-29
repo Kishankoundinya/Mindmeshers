@@ -1,0 +1,108 @@
+/* New styles for dot layout options */
+.custom-grid-inputs {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(214, 51, 108, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(214, 51, 108, 0.2);
+}
+
+.custom-grid-inputs h4 {
+  margin: 0 0 10px 0;
+  color: #d6336c;
+  font-size: 1em;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.input-row label {
+  margin: 0;
+  font-size: 0.9em;
+  color: #666;
+  min-width: 60px;
+}
+
+.number-input {
+  padding: 8px;
+  border: 2px solid #d6336c;
+  border-radius: 6px;
+  width: 70px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.number-input:focus {
+  outline: none;
+  border-color: #b52a5a;
+  box-shadow: 0 0 5px rgba(214, 51, 108, 0.3);
+}
+
+.layout-info {
+  margin-top: 10px;
+  padding: 8px;
+  background: rgba(214, 51, 108, 0.1);
+  border-radius: 6px;
+  text-align: center;
+}
+
+.layout-info p {
+  margin: 0;
+  font-weight: bold;
+  color: #d6336c;
+}
+
+.dot-counter {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #d6336c;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(214, 51, 108, 0.3);
+}
+
+/* Enhanced responsive design */
+@media (max-width: 768px) {
+  .input-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .input-row label {
+    min-width: auto;
+    text-align: left;
+  }
+  
+  .number-input {
+    width: 100%;
+  }
+  
+  .dot-counter {
+    bottom: -25px;
+    font-size: 0.8em;
+    padding: 4px 12px;
+  }
+  
+  .custom-grid-inputs {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dot-counter {
+    bottom: -20px;
+    font-size: 0.75em;
+    padding: 3px 10px;
+  }
+}
